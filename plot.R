@@ -147,3 +147,45 @@ ggplot(post_feature_12, aes(factor(page_id), T23))+
 ggplot(post_feature_12, aes(factor(page_id), T24))+
   geom_boxplot(aes(fill = ratio))+
   coord_flip()
+
+     
+#########################CDF for mal and normal
+post_feature_12$label2 = 'a'
+mal_ind = which(post_feature_12$label==1)
+nor_ind = which(post_feature_12$label==0)
+post_feature_12$label2[mal_ind] = 'target'
+post_feature_12$label2[nor_ind] = 'nontarget'
+
+ggplot(post_feature_12, aes(spanning_time, colour = label2))+ 
+  stat_ecdf(size = 1.5)+ 
+  scale_x_log10()+
+  labs(colour = "", y="CDF", x = "spanning time(minute)")
+  
+ggplot(post_feature_12, aes(n_comments, colour = label2))+ 
+  stat_ecdf(size =1.5)+ 
+  scale_x_log10()+  labs(colour = "", y="CDF", x= "number of comments")
+
+ggplot(post_feature_12, aes(n_people, colour =label2))+ 
+  stat_ecdf()+ 
+  scale_x_log10()+  labs(colour = "", y="CDF")
+
+
+ggplot(post_feature_12, aes(n_people_post, colour = label2))+ 
+  stat_ecdf()+ 
+  scale_x_log10()+  labs(colour = "", y="CDF")
+
+ggplot(post_feature_12, aes(n_people_cmts, colour = label2))+ 
+  stat_ecdf()+ 
+  scale_x_log10()+  labs(colour = "", y="CDF")
+
+ggplot(post_feature_12, aes(T1, colour = label2)) + stat_ecdf(size = 1.5) +
+  labs(colour = "", y="CDF", x= "1st hour")
+
+ggplot(post_feature_12, aes(T2, colour = factor(label))) + stat_ecdf()
+ggplot(post_feature_12, aes(T3, colour = factor(label))) + stat_ecdf()
+ggplot(post_feature_12, aes(T24, colour = factor(label))) + stat_ecdf()+
+  labs(colour = "mal")
+
+qplot(label2, data=post_feature_12, geom="bar", fill=factor(post_type))+
+  scale_y_log10()+
+  labs(y = "", x= "")
